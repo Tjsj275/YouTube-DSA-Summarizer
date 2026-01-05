@@ -1,0 +1,195 @@
+<div class="container">
+  <!-- Header -->
+  <header class="header">
+    <h1 class="title">📚 YouTube DSA Lecture Summarizer</h1>
+    <p class="subtitle">
+      Transform DSA lectures into structured revision notes
+    </p>
+  </header>
+
+  <!-- Toast Messages -->
+  <div class="toast-container">
+    <div *ngIf="errorMessage" class="toast toast-error">
+      <span class="toast-icon">❌</span>
+      <span class="toast-message">{{ errorMessage }}</span>
+    </div>
+    <div *ngIf="successMessage" class="toast toast-success">
+      <span class="toast-icon">✅</span>
+      <span class="toast-message">{{ successMessage }}</span>
+    </div>
+  </div>
+
+  <!-- Input Form -->
+  <div class="input-section">
+    <div class="form-card">
+      <label for="youtubeUrl" class="form-label">YouTube Video URL</label>
+      <div class="input-group">
+        <input
+          type="text"
+          id="youtubeUrl"
+          [(ngModel)]="youtubeUrl"
+          placeholder="https://www.youtube.com/watch?v=..."
+          class="form-input"
+          [disabled]="isLoading"
+          (keyup.enter)="onSubmit()"
+        />
+        <button
+          class="btn btn-primary"
+          (click)="onSubmit()"
+          [disabled]="isLoading || !youtubeUrl.trim()"
+        >
+          <span *ngIf="!isLoading">Generate Summary</span>
+          <span *ngIf="isLoading" class="loading-text">
+            <span class="spinner"></span>
+            Processing...
+          </span>
+        </button>
+      </div>
+      <p class="form-help">
+        Enter the URL of a YouTube DSA lecture to generate structured revision
+        notes
+      </p>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="loading-section">
+    <div class="loading-card">
+      <div class="loading-spinner"></div>
+      <h3 class="loading-title">Generating Your Summary</h3>
+      <div class="loading-steps">
+        <div class="loading-step">
+          <div class="step-icon">🎥</div>
+          <p>Fetching transcript...</p>
+        </div>
+        <div class="loading-step">
+          <div class="step-icon">✂️</div>
+          <p>Chunking content...</p>
+        </div>
+        <div class="loading-step">
+          <div class="step-icon">🤖</div>
+          <p>AI processing...</p>
+        </div>
+        <div class="loading-step">
+          <div class="step-icon">📝</div>
+          <p>Structuring notes...</p>
+        </div>
+      </div>
+      <p class="loading-note">This may take 30-60 seconds for longer videos</p>
+    </div>
+  </div>
+
+  <!-- Summary Display -->
+  <div
+    *ngIf="summary && !isLoading"
+    id="summary-section"
+    class="summary-section"
+  >
+    <!-- Action Buttons -->
+    <div class="action-bar">
+      <button class="btn btn-download" (click)="downloadPDF()">
+        <span class="btn-icon">📥</span>
+        Download PDF
+      </button>
+      <button class="btn btn-reset" (click)="reset()">
+        <span class="btn-icon">🔄</span>
+        New Summary
+      </button>
+    </div>
+
+    <!-- Video Info -->
+    <div class="summary-card video-info-card">
+      <h2 class="card-title">
+        <span class="card-icon">🎬</span>
+        Video Information
+      </h2>
+      <div class="video-info">
+        <p><strong>Video ID:</strong> {{ summary?.videoId }}</p>
+        <p><strong>Title:</strong> {{ summary?.videoTitle }}</p>
+      </div>
+    </div>
+
+    <!-- Problem Summary -->
+    <div class="summary-card">
+      <h2 class="card-title">
+        <span class="card-icon">🎯</span>
+        Problem Summary
+      </h2>
+      <div class="card-content">
+        <p>{{ summary?.problemSummary }}</p>
+      </div>
+    </div>
+
+    <!-- Algorithm Steps -->
+    <div class="summary-card">
+      <h2 class="card-title">
+        <span class="card-icon">📋</span>
+        Algorithm Steps
+      </h2>
+      <div class="card-content">
+        <pre class="formatted-text">{{ summary?.algorithmSteps }}</pre>
+      </div>
+    </div>
+
+    <!-- Pseudocode -->
+    <div class="summary-card">
+      <h2 class="card-title">
+        <span class="card-icon">💻</span>
+        Pseudocode
+      </h2>
+      <div class="card-content code-block">
+        <pre class="code-content">{{ summary?.pseudocode }}</pre>
+      </div>
+    </div>
+
+    <!-- Complexity Analysis -->
+    <div class="complexity-grid">
+      <div class="summary-card complexity-card">
+        <h2 class="card-title">
+          <span class="card-icon">⏱️</span>
+          Time Complexity
+        </h2>
+        <div class="card-content">
+          <p>{{ summary?.timeComplexity }}</p>
+        </div>
+      </div>
+
+      <div class="summary-card complexity-card">
+        <h2 class="card-title">
+          <span class="card-icon">💾</span>
+          Space Complexity
+        </h2>
+        <div class="card-content">
+          <p>{{ summary?.spaceComplexity }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Edge Cases -->
+    <div class="summary-card">
+      <h2 class="card-title">
+        <span class="card-icon">⚠️</span>
+        Edge Cases
+      </h2>
+      <div class="card-content">
+        <pre class="formatted-text">{{ summary?.edgeCases }}</pre>
+      </div>
+    </div>
+
+    <!-- Revision Notes -->
+    <div class="summary-card revision-card">
+      <h2 class="card-title">
+        <span class="card-icon">📌</span>
+        Quick Revision Notes
+      </h2>
+      <div class="card-content">
+        <pre class="formatted-text">{{ summary?.revisionNotes }}</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>Built with Angular, Spring Boot & Gemini AI | © 2024</p>
+  </footer>
+</div>
