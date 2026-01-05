@@ -64,6 +64,35 @@ youtube-dsa-summarizer/
 
 ---
 
+```bash
+cd backend
+mvn spring-boot:run
+```
+
+
+---
+
 ## 🚀 How to Run
+
+### Frontend
+
+```bash
+cd frontend
+npm install
+ng serve
+```
+
+---
+
+## 📄 Sample Output
+
+The generated revision notes contain:
+
+- Clear algorithm explanation  
+- Optimized approach  
+- Interview-ready pseudocode  
+- Accurate time & space complexity  
+- Key edge cases  
+- Quick 5-line revision notes  
 
 ### Backend
