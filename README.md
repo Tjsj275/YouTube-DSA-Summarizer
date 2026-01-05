@@ -96,5 +96,3 @@ The generated revision notes contain:
 - Accurate time & space complexity  
 - Key edge cases  
 - Quick 5-line revision notes  
-
-### Backend
