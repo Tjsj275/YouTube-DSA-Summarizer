@@ -64,6 +64,10 @@ youtube-dsa-summarizer/
 
 ---
 
+## 🚀 How to Run
+
+###Backend
+
 ```bash
 cd backend
 mvn spring-boot:run
@@ -71,8 +75,6 @@ mvn spring-boot:run
 
 
 ---
-
-## 🚀 How to Run
 
 ### Frontend
 
